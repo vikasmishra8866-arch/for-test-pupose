@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Seva Portal - Premium Hub</title>
+    <!-- Tailwind CSS for Premium Design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Slick Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        
+        :root {
+            --neon-blue: #00f2ff;
+            --neon-purple: #7000ff;
+            --dark-bg: #05070f;
+            --card-bg: rgba(13, 20, 35, 0.7);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--dark-bg);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(0, 242, 255, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(112, 0, 255, 0.06) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        /* Glassmorphism Card Style */
+        .premium-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .premium-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 242, 255, 0.25);
+            box-shadow: 0 20px 40px -15px rgba(0, 242, 255, 0.12);
+        }
+
+        /* Active Sidebar Link Style */
+        .sidebar-active {
+            background: linear-gradient(90deg, rgba(6, 182, 212, 0.15) 0%, transparent 100%);
+            border-left: 4px solid #06b6d4;
+            color: #ffffff;
+        }
+
+        /* Hover Shiny Button Effect */
+        .glow-button {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .glow-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255, 255, 255, 0.15),
+                transparent
+            );
+            transition: all 0.6s ease;
+        }
+
+        .glow-button:hover::before {
+            left: 100%;
+        }
+    </style>
+</head>
+<body class="text-slate-100 min-h-screen flex flex-col justify-between">
+
+    <!-- Navbar -->
+    <nav class="border-b border-slate-800/60 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50 px-6 py-4">
+        <div class="max-w-[1600px] mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <button onclick="toggleSidebar()" class="lg:hidden text-slate-400 hover:text-white mr-2">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <div class="bg-gradient-to-tr from-cyan-400 to-indigo-500 p-2.5 rounded-xl text-slate-950 font-bold shadow-lg shadow-cyan-500/10">
+                    <i class="fa-solid fa-cube text-lg"></i>
+                </div>
+                <div>
+                    <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-cyan-400 via-sky-400 to-indigo-400 bg-clip-text text-transparent">
+                        VIKAS CYBER-PORTAL
+                    </span>
+                    <p class="text-[9px] text-slate-500 font-mono tracking-widest uppercase">Unified Work Environment</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4 text-xs">
+                <span class="px-3 py-1.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full font-semibold flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    Secure Nodes Active
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar and Dashboard Wrapper -->
+    <div class="flex flex-grow w-full max-w-[1600px] mx-auto relative">
+        
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar" class="fixed lg:static top-[73px] left-0 h-[calc(100vh-73px)] w-72 bg-slate-950/90 lg:bg-transparent border-r border-slate-900/80 p-6 flex flex-col justify-between z-40 transition-transform duration-300 -translate-x-full lg:translate-x-0">
+            <div class="space-y-8">
+                <div>
+                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-4 pl-2">System Gateways</p>
+                    <div class="space-y-2">
+                        <!-- Pawan Auto Button -->
+                        <button onclick="switchTab('pawan-auto', this)" class="sidebar-link sidebar-active w-full flex items-center gap-3.5 py-3 px-4 rounded-xl text-slate-400 hover:text-white transition-all text-left">
+                            <i class="fa-solid fa-wallet text-cyan-400"></i>
+                            <span class="text-sm font-semibold">Pawan Auto</span>
+                        </button>
+                        <!-- Vehicle Service Button -->
+                        <button onclick="switchTab('vehicle-service', this)" class="sidebar-link w-full flex items-center gap-3.5 py-3 px-4 rounded-xl text-slate-400 hover:text-white transition-all text-left">
+                            <i class="fa-solid fa-car text-amber-400"></i>
+                            <span class="text-sm font-semibold">Vehicle Service</span>
+                        </button>
+                        <!-- Document Download Button -->
+                        <button onclick="switchTab('doc-download', this)" class="sidebar-link w-full flex items-center gap-3.5 py-3 px-4 rounded-xl text-slate-400 hover:text-white transition-all text-left">
+                            <i class="fa-solid fa-file-arrow-down text-purple-400"></i>
+                            <span class="text-sm font-semibold">Document Download</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar Footer -->
+            <div class="border-t border-slate-900 pt-4">
+                <div class="bg-slate-900/50 p-4 rounded-2xl border border-slate-800/40">
+                    <p class="text-[9px] text-slate-500 font-bold uppercase tracking-wider mb-1">Terminal State</p>
+                    <div class="flex items-center gap-2">
+                        <div class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></div>
+                        <span class="text-[11px] text-slate-400">Dashboard Online</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Dashboard Viewport -->
+        <main class="flex-grow p-6 lg:p-10 w-full overflow-hidden">
+            
+            <!-- SECTION 1: PAWAN AUTO TAB -->
+            <div id="pawan-auto" class="tab-content animate-in fade-in duration-300">
+                <header class="mb-10">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-cyan-500/10 text-cyan-400 text-xs font-bold rounded-full border border-cyan-500/20 mb-3 uppercase tracking-wider">
+                        <i class="fa-solid fa-lock"></i> Enterprise Software
+                    </div>
+                    <h2 class="text-3xl lg:text-4xl font-black text-white tracking-tight">Pawan Auto ERP</h2>
+                    <p class="text-slate-400 mt-2 max-w-xl text-sm font-light">Office account system, active ledgers, aur customer active database access karne ke liye link launch karein.</p>
+                </header>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="premium-card p-8 rounded-3xl flex flex-col justify-between">
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-2xl mb-6 border border-cyan-500/20">
+                                <i class="fa-solid fa-wallet"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-3">Pawan Auto Accounts</h3>
+                            <p class="text-sm text-slate-400 mb-8 leading-relaxed">
+                                Ledger balance update karne, customer pending loans track karne aur transaction status check karne ke liye live node par enter karein.
+                            </p>
+                        </div>
+                        <button onclick="openService('https://pawanauto.tapandtype.com/login.php', 'PawanAuto_Portal')" class="glow-button w-full bg-gradient-to-r from-cyan-500/80 to-indigo-600/80 hover:from-cyan-400 hover:to-indigo-500 text-slate-950 font-bold py-3.5 px-4 rounded-2xl transition duration-300 flex items-center justify-center gap-2 border border-cyan-500/30 shadow-lg shadow-cyan-500/10">
+                            Open Loan Portal <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: VEHICLE SERVICE TAB -->
+            <div id="vehicle-service" class="tab-content hidden animate-in fade-in duration-300">
+                <header class="mb-10">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-amber-500/10 text-amber-400 text-xs font-bold rounded-full border border-amber-500/20 mb-3 uppercase tracking-wider">
+                        <i class="fa-solid fa-car"></i> Transport Gateways
+                    </div>
+                    <h2 class="text-3xl lg:text-4xl font-black text-white tracking-tight">Vehicle Management System</h2>
+                    <p class="text-slate-400 mt-2 max-w-xl text-sm font-light">Vehicle, challans, RC details aur fitness compliance se judi official interfaces ek hi clean matrix par.</p>
+                </header>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Option 1: Vehicle Details -->
+                    <div class="premium-card p-6 rounded-3xl flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl mb-4 border border-amber-500/20">
+                                <i class="fa-solid fa-car"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-white mb-2">Vehicle Details (Citizen Port)</h3>
+                            <p class="text-xs text-slate-400 mb-6 leading-relaxed">
+                                Official mParivahan system se connect hokar vehicle verification status, verification date check karein.
+                            </p>
+                        </div>
+                        <button onclick="openService('https://vahan.parivahan.gov.in/nrservices/faces/user/citizen/citizenlogin.xhtml', 'VehiclePortal')" class="glow-button w-full bg-gradient-to-r from-amber-500/80 to-orange-600/80 hover:from-amber-400 hover:to-orange-500 text-slate-950 font-bold py-3 px-4 rounded-xl transition duration-300 flex items-center justify-center gap-2 border border-amber-500/30">
+                            Open Citizen Login <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Option 2: PUC Certificate -->
+                    <div class="premium-card p-6 rounded-3xl flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl mb-4 border border-emerald-500/20">
+                                <i class="fa-solid fa-smog"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-white mb-2">PUC Certificate</h3>
+                            <p class="text-xs text-slate-400 mb-6 leading-relaxed">
+                                Pollution Under Control (PUC) engine se validity verify karein aur automatic digital certificate copy nikalyein.
+                            </p>
+                        </div>
+                        <button onclick="openService('https://puc.parivahan.gov.in/puc/views/PucCertificate.xhtml', 'PUC_Portal')" class="glow-button w-full bg-gradient-to-r from-emerald-500/80 to-teal-600/80 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-bold py-3 px-4 rounded-xl transition duration-300 flex items-center justify-center gap-2 border border-emerald-500/30">
+                            Download PUC PDF <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Option 3: Regular Challan -->
+                    <div class="premium-card p-6 rounded-3xl flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-xl mb-4 border border-indigo-500/20">
+                                <i class="fa-solid fa-receipt"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-white mb-2">Regular Challan</h3>
+                            <p class="text-xs text-slate-400 mb-6 leading-relaxed">
+                                Parivahan database se camera speed violations, parking penalty details check aur settle karein.
+                            </p>
+                        </div>
+                        <button onclick="openService('https://echallan.parivahan.gov.in/index/Accused-challan', 'RegularChallan_Portal')" class="glow-button w-full bg-gradient-to-r from-indigo-500/80 to-purple-600/80 hover:from-indigo-400 hover:to-purple-500 text-slate-950 font-bold py-3 px-4 rounded-xl transition duration-300 flex items-center justify-center gap-2 border border-indigo-500/30">
+                            Check Regular Tickets <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Option 4: Virtual Court Challan -->
+                    <div class="premium-card p-6 rounded-3xl flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-2xl bg-rose-500/10 text-rose-400 flex items-center justify-center text-xl mb-4 border border-rose-500/20">
+                                <i class="fa-solid fa-gavel"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-white mb-2">Virtual Court Challan</h3>
+                            <p class="text-xs text-slate-400 mb-6 leading-relaxed">
+                                Judicial servers se traffic cases, judicial notifications, summons aur critical challan disposal execute karein.
+                            </p>
+                        </div>
+                        <button onclick="openService('https://vcourts.gov.in/virtualcourt/', 'VirtualCourt_Portal')" class="glow-button w-full bg-gradient-to-r from-rose-500/80 to-red-600/80 hover:from-rose-400 hover:to-red-500 text-slate-950 font-bold py-3 px-4 rounded-xl transition duration-300 flex items-center justify-center gap-2 border border-rose-500/30">
+                            Open Virtual Court <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Option 5: Instant Pending Challan -->
+                    <div class="premium-card p-6 rounded-3xl flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-2xl bg-sky-500/10 text-sky-400 flex items-center justify-center text-xl mb-4 border border-sky-500/20">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-white mb-2">Instant Challan Check</h3>
+                            <p class="text-xs text-slate-400 mb-6 leading-relaxed">
+                                Cars24 secure framework se bina OTP ya login details bhare, direct vehicle number dalkar pending challans track karein.
+                            </p>
+                        </div>
+                        <button onclick="openService('https://www.cars24.com/traffic-challan/', 'Cars24Challan_Portal')" class="glow-button w-full bg-gradient-to-r from-sky-500/80 to-blue-600/80 hover:from-sky-400 hover:to-blue-500 text-slate-950 font-bold py-3 px-4 rounded-xl transition duration-300 flex items-center justify-center gap-2 border border-sky-500/30">
+                            Instant Check <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: DOCUMENT DOWNLOAD TAB -->
+            <div id="doc-download" class="tab-content hidden animate-in fade-in duration-300">
+                <header class="mb-10">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-purple-500/10 text-purple-400 text-xs font-bold rounded-full border border-purple-500/20 mb-3 uppercase tracking-wider">
+                        <i class="fa-solid fa-file-arrow-down"></i> Document Archive
+                    </div>
+                    <h2 class="text-3xl lg:text-4xl font-black text-white tracking-tight">Identity & Utility Portals</h2>
+                    <p class="text-slate-400 mt-2 max-w-xl text-sm font-light">Aadhaar card aur municipal property tax bills securely aur fast retrieve karne ka consolidated block.</p>
+                </header>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Option 1: Aadhaar Download -->
+                    <div class="premium-card p-8 rounded-3xl flex flex-col justify-between">
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-2xl mb-6 border border-purple-500/20">
+                                <i class="fa-solid fa-fingerprint"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-3">Aadhaar Card Download</h3>
+                            <p class="text-sm text-slate-400 mb-8 leading-relaxed">
+                                UIDAI myAadhaar portal se OTP validation ke sath digital identity document download karein.
+                            </p>
+                        </div>
+                        <button onclick="openService('https://myaadhaar.uidai.gov.in/genricDownloadAadhaar/en', 'Aadhaar_Portal')" class="glow-button w-full bg-gradient-to-r from-purple-500/80 to-indigo-600/80 hover:from-purple-400 hover:to-indigo-500 text-slate-950 font-bold py-3.5 px-4 rounded-2xl transition duration-300 flex items-center justify-center gap-2 border border-purple-500/30 shadow-lg shadow-purple-500/10">
+                            Download Aadhaar <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Option 2: SMC Tax Bill -->
+                    <div class="premium-card p-8 rounded-3xl flex flex-col justify-between">
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-2xl mb-6 border border-cyan-500/20">
+                                <i class="fa-solid fa-building-user"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-3">Tax Bill Download</h3>
+                            <p class="text-sm text-slate-400 mb-8 leading-relaxed">
+                                Surat Municipal Corporation (SMC) portal se direct tenement number dalkar Property Tax bill check aur download karein.
+                            </p>
+                        </div>
+                        <button onclick="openService('https://www.suratmunicipal.gov.in/OnlineServices/PropertyTax/ViewBill', 'SMCTax_Portal')" class="glow-button w-full bg-gradient-to-r from-cyan-500/80 to-indigo-600/80 hover:from-cyan-400 hover:to-indigo-500 text-slate-950 font-bold py-3.5 px-4 rounded-2xl transition duration-300 flex items-center justify-center gap-2 border border-cyan-500/30 shadow-lg shadow-cyan-500/10">
+                            Download SMC Tax Bill <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-900 bg-slate-950/40 py-8 text-center text-sm text-slate-500">
+        <div class="max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between items-center px-6 gap-4">
+            <p>© 2026 Vikas Cyber-Hub. All visual designs & references belong to official authorities.</p>
+            <p class="text-slate-600 text-xs">
+                <span class="text-cyan-500 font-bold">⚡ Fast</span> • 
+                <span class="text-indigo-400 font-bold">🛡️ Secure</span> • 
+                <span class="text-emerald-400 font-bold">🔒 Multi-Verified</span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Track opened windows to prevent multi-tab session conflicts
+        const openedWindows = {};
+
+        // Window opening handler
+        function openService(url, targetName) {
+            const width = 1150;
+            const height = 800;
+            const left = (screen.width - width) / 2;
+            const top = (screen.height - height) / 2;
+            
+            // Check if window reference exists and is not closed
+            if (openedWindows[targetName] && !openedWindows[targetName].closed) {
+                // Instantly bring existing window to the front
+                openedWindows[targetName].focus();
+            } else {
+                // Open new secure isolated popup
+                openedWindows[targetName] = window.open(
+                    url, 
+                    targetName, 
+                    `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes,status=yes`
+                );
+            }
+        }
+
+        // SPA Tab switching controller
+        function switchTab(tabId, el) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+
+            // Show current active tab
+            document.getElementById(tabId).classList.remove('hidden');
+
+            // Reset active state for all sidebar buttons
+            document.querySelectorAll('.sidebar-link').forEach(link => {
+                link.classList.remove('sidebar-active');
+            });
+
+            // Set active state on clicked element
+            el.classList.add('sidebar-active');
+
+            // Auto-close sidebar on mobile after clicking
+            const sidebar = document.getElementById('sidebar');
+            if (!sidebar.classList.contains('-translate-x-full')) {
+                toggleSidebar();
+            }
+        }
+
+        // Mobile Sidebar Toggle
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                sidebar.classList.add('translate-x-0');
+            } else {
+                sidebar.classList.remove('translate-x-0');
+                sidebar.classList.add('-translate-x-full');
+            }
+        }
+    </script>
+</body>
+</html>
